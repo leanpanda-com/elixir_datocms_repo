@@ -12,6 +12,8 @@ defmodule DatoCMS.Repo.Loader do
       DatoCMS.Repo.Site.fetch() |> handle_fetch_site
       if opts[:cache] do
         cache()
+      else
+        {:ok}
       end
     end
   end
