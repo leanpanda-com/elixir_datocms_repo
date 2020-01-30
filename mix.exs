@@ -4,7 +4,7 @@ defmodule DatoCMS.Repo.MixProject do
   def project do
     [
       app: :datocms_repo,
-      version: "0.1.0",
+      version: "0.6.0",
       elixir: "~> 1.9",
       name: "DatoCMS Repo wrapping the REST client",
       description: "DatoCMS Repo wrapping the REST client",
@@ -31,8 +31,8 @@ defmodule DatoCMS.Repo.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
-      {:fermo_helpers, "~> 0.1.0"},
-      {:datocms_rest_client, "~> 0.3.0"},
+      {:fermo_helpers, "~> 0.6.0"},
+      {:datocms_rest_client, "~> 0.6.0"},
       {:memoize, "~> 1.3"}
     ]
   end
