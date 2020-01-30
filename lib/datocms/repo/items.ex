@@ -13,13 +13,13 @@ defmodule DatoCMS.Repo.Items do
 
   defp handle({:ok, response}, [], 1, nil) do
     # First time
-    total_count = response["meta"]["total_count"]
+    total_count = response.meta.total_count
     total_pages = round(Float.ceil(total_count / @page_limit))
-    data = response["data"]
+    data = response.data
     loop(data, 1, total_pages)
   end
   defp handle({:ok, response}, items, page, total_pages) do
-    data = response["data"]
+    data = response.data
     loop(items ++ data, page, total_pages)
   end
   defp handle({:error, reason}, _items, _page, _total_pages) do
