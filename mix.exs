@@ -4,7 +4,7 @@ defmodule DatoCMS.Repo.MixProject do
   def project do
     [
       app: :datocms_repo,
-      version: "0.6.0",
+      version: "0.6.1",
       elixir: "~> 1.9",
       name: "DatoCMS Repo wrapping the REST client",
       description: "DatoCMS Repo wrapping the REST client",

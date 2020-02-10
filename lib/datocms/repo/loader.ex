@@ -9,7 +9,7 @@ defmodule DatoCMS.Repo.Loader do
     if opts[:from_cache] do
       load_from_cache()
     else
-      DatoCMS.Repo.Site.fetch() |> handle_fetch_site
+      {:ok} = DatoCMS.Repo.Site.fetch() |> handle_fetch_site
       if opts[:cache] do
         cache()
       else
