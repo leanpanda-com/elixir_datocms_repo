@@ -31,8 +31,8 @@ defmodule DatoCMS.Repo.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
-      {:fermo_helpers, ">= 0.6.0"},
       {:datocms_rest_client, "~> 0.6.0 and >= 0.6.2"},
+      {:fermo_helpers, "~> 0.8.2"},
       {:memoize, "~> 1.3"}
     ]
   end
