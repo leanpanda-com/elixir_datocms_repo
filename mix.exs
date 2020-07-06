@@ -1,12 +1,13 @@
 defmodule DatoCMS.Repo.MixProject do
   use Mix.Project
 
+  @version "0.8.2"
   @git_origin "https://github.com/leanpanda-com/elixir_datocms_repo"
 
   def project do
     [
       app: :datocms_repo,
-      version: "0.6.4",
+      version: @version,
       elixir: "~> 1.9",
       name: "DatoCMS Repo",
       description: "DatoCMS Repo wrapping the REST client",
