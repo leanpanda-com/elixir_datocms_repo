@@ -7,6 +7,6 @@ defmodule DatoCMS.Repo.Supervisor do
 
   def init(:ok) do
     children = [worker(DatoCMS.Repo, [])]
-    supervise(children, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :one_for_one)
   end
 end
