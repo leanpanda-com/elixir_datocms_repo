@@ -1,23 +1,27 @@
 defmodule DatoCMS.Repo.MixProject do
   use Mix.Project
 
+  @git_origin "https://github.com/leanpanda-com/elixir_datocms_repo"
+
   def project do
     [
       app: :datocms_repo,
       version: "0.6.4",
       elixir: "~> 1.9",
-      name: "DatoCMS Repo wrapping the REST client",
+      name: "DatoCMS Repo",
       description: "DatoCMS Repo wrapping the REST client",
       package: package(),
-      source_url: "https://github.com/leanpanda-com/elixir_datocms_repo",
-      homepage_url: "https://github.com/leanpanda-com/elixir_datocms_repo",
-      docs: [
-        main: "DatoCMS.Repo",
-        extras: ["README.md"]
-      ],
+      elixirc_paths: elixirc_paths(Mix.env),
+      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      elixirc_paths: elixirc_paths(Mix.env),
+      docs: [
+        extras: ["README.md"],
+        homepage_url: @git_origin,
+        main: "DatoCMS.Repo",
+        source_ref: "v#{@version}",
+        source_url: @git_origin
+      ]
     ]
   end
 
