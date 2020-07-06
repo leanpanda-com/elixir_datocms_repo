@@ -39,6 +39,15 @@ defmodule DatoCMS.Repo do
     site
   end
 
+  defmemo items_of_type(type) do
+    GenServer.call(@server_name, {:items_of_type, type})
+  end
+
+  defmemo items_of_type!(type) do
+    {:ok, items_of_type} = items_of_type(type)
+    items_of_type
+  end
+
   defmemo localized_items_of_type(type, locale) do
     GenServer.call(@server_name, {:localized_items_of_type, type, locale})
   end
@@ -82,6 +91,18 @@ defmodule DatoCMS.Repo do
   def handle_call({:site}, _from, state) do
     site = state[:site]
     {:reply, {:ok, site}, state}
+  end
+  def handle_call({:items_of_type, type}, _from, state) do
+    {:ok, locales} = locales(state)
+    item_type = item_type(type, state)
+    items = items_of_type(type, state)
+    |> Enum.map(fn {_id, item} ->
+      Enum.reduce(locales, %{}, fn locale, acc ->
+        localized = localize(item, item_type, locale)
+        put_in(acc, [locale], localized)
+      end)
+    end)
+    {:reply, {:ok, items}, state}
   end
   def handle_call({:localized_items_of_type, type, locale}, _from, state) do
     item_type = item_type(type, state)
@@ -162,15 +183,15 @@ defmodule DatoCMS.Repo do
     {:reply, {:ok, items}, state}
   end
 
+  defp locales(state) do
+    locales = state[:site][:data][:attributes][:locales]
+    |> Enum.map(&(AtomKey.to_atom(&1)))
+    {:ok, locales}
+  end
+
   defp default_locale(state) do
-    %{
-      data: %{
-        attributes: %{
-          locales: [first_locale | _]
-        }
-      }
-    } = state[:site]
-    {:ok, AtomKey.to_atom(first_locale)}
+    {:ok, [first_locale | _]} = locales(state)
+    {:ok, first_locale}
   end
 
   def localize(item, item_type, locale) do
