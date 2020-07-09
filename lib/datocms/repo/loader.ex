@@ -6,7 +6,7 @@ defmodule DatoCMS.Repo.Loader do
   end
 
   def load(opts \\ []) do
-    if opts[:from_cache] do
+    if opts[:from_cache] && File.exists?(@cache_path) do
       load_from_cache()
     else
       {:ok} = DatoCMS.Repo.Site.fetch() |> handle_fetch_site
