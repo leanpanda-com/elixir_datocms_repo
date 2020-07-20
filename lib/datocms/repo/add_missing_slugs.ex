@@ -1,5 +1,5 @@
 defmodule DatoCMS.Repo.AddMissingSlugs do
-  alias FermoHelpers.Slug
+  import FermoSlugger
 
   def to(items_by_type, item_types_by_type) do
     with_slugs = Enum.reduce(item_types_by_type, items_by_type, fn ({type_name, item_type}, acc) ->
@@ -33,11 +33,11 @@ defmodule DatoCMS.Repo.AddMissingSlugs do
       title = item[key]
       slug = if localized do
         Enum.reduce(title, %{}, fn ({locale, text}, acc) ->
-          slug = Slug.from(id, text)
+          slug = slug(id, text)
           Map.put(acc, locale, slug)
         end)
       else
-        Slug.from(id, title)
+        slug(id, title)
       end
       slugged_item = Map.put(item, :slug, slug)
       Map.put(slugged_items, id, slugged_item)

@@ -1,7 +1,7 @@
 defmodule DatoCMS.Repo.MixProject do
   use Mix.Project
 
-  @version "0.8.3"
+  @version "0.9.0"
   @git_origin "https://github.com/leanpanda-com/elixir_datocms_repo"
 
   def project do
@@ -37,7 +37,7 @@ defmodule DatoCMS.Repo.MixProject do
     [
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:datocms_rest_client, "~> 0.6.0 and >= 0.6.2"},
-      {:fermo_helpers, "~> 0.8.3"},
+      {:fermo_slugger, "~> 0.8.4"},
       {:memoize, "~> 1.3"}
     ]
   end
