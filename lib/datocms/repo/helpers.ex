@@ -5,14 +5,28 @@ defmodule DatoCMS.Repo.Helpers do
       def dato_item({type, _id} = specifier, locale) when is_atom(type) and is_atom(locale) do
         DatoCMS.Repo.get!(specifier, locale)
       end
+      def dato_item({type, _id} = specifier, locale) when is_atom(type) and is_binary(locale) do
+        dato_item(specifier, String.to_atom(locale))
+      end
+
       def dato_item({type} = specifier, locale) when is_atom(type) and is_atom(locale) do
         DatoCMS.Repo.get!(specifier, locale)
       end
+      def dato_item({type} = specifier, locale) when is_atom(type) and is_binary(locale) do
+        dato_item(specifier, locale)
+      end
+
       def dato_item(type, locale) when is_atom(type) and is_atom(locale) do
-        DatoCMS.Repo.get!({type}, locale)
+        dato_item({type}, locale)
+      end
+      def dato_item(type, locale) when is_atom(type) and is_binary(locale) do
+        dato_item({type}, String.to_atom(locale))
       end
       def dato_item(type, locale) when is_binary(type) and is_atom(locale) do
-        DatoCMS.Repo.get!({String.to_atom(type)}, locale)
+        dato_item({String.to_atom(type)}, locale)
+      end
+      def dato_item(type, locale) when is_binary(type) and is_binary(locale) do
+        dato_item({String.to_atom(type)}, String.to_atom(locale))
       end
 
       def dato_item({type, _id} = specifier) when is_atom(type) do
@@ -22,10 +36,10 @@ defmodule DatoCMS.Repo.Helpers do
         DatoCMS.Repo.get!(specifier)
       end
       def dato_item(type) when is_atom(type) do
-        DatoCMS.Repo.get!({type})
+        dato_item({type})
       end
       def dato_item(type) when is_binary(type) do
-        DatoCMS.Repo.get!({String.to_atom(type)})
+        dato_item({String.to_atom(type)})
       end
 
       # {:type, %{en: [], it: [...]}}
