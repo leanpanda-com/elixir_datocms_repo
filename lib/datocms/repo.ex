@@ -14,11 +14,16 @@ defmodule DatoCMS.Repo do
       :json_parser_options,
       [keys: :atoms]
     )
+
     GenServer.start_link(__MODULE__, [], name: @server_name)
+
+    {:ok, self()}
   end
 
   def put(state) do
     GenServer.call(@server_name, {:put, state})
+
+    {:ok}
   end
 
   def all do
