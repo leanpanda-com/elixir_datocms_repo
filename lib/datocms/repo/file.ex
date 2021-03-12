@@ -4,16 +4,12 @@ defmodule DatoCMS.Repo.File do
   dato_file_url(file)
   ```
   """
-  def url_for(file, site \\ nil) do
-    domain(site) <> file.path
+  def url_for(file) do
+    domain() <> file.path
   end
 
-  defp domain(site) do
-    site = site || repo_site()
-    "https://" <> site.data.attributes.imgix_host
-  end
-
-  defp repo_site() do
-    DatoCMS.Repo.site!()
+  defp domain() do
+    imgix_host = DatoCMS.Repo.site!(:imgix_host)
+    "https://#{imgix_host}"
   end
 end

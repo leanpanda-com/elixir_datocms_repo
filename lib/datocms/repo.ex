@@ -30,6 +30,15 @@ defmodule DatoCMS.Repo do
     state
   end
 
+  defmemo site(attribute) do
+    {:ok, site!().data.attributes[attribute]}
+  end
+
+  def site!(attribute) do
+    {:ok, site} = site(attribute)
+    site
+  end
+
   def site do
     GenServer.call(@server_name, {:site})
   end
