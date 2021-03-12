@@ -57,16 +57,16 @@ defmodule DatoCMS.Repo do
     GenServer.call(@server_name, {:items_of_type, type})
   end
 
-  defmemo items_of_type!(type) do
+  def items_of_type!(type) do
     {:ok, items_of_type} = items_of_type(type)
     items_of_type
   end
 
-  defmemo localized_items_of_type(type, locale) do
+  def localized_items_of_type(type, locale) do
     GenServer.call(@server_name, {:localized_items_of_type, type, locale})
   end
 
-  defmemo localized_items_of_type!(type, locale) do
+  def localized_items_of_type!(type, locale) do
     {:ok, localized_items_of_type} = localized_items_of_type(type, locale)
     localized_items_of_type
   end
