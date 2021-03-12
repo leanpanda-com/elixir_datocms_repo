@@ -11,27 +11,27 @@ defmodule DatoCMS.Repo.MetaTag.Image do
   defp handle_item_seo_image(nil, nil, nil, _site) do
     {:ok, []}
   end
-  defp handle_item_seo_image(nil, nil, fallback_seo_image, site) do
+  defp handle_item_seo_image(nil, nil, fallback_seo_image, _site) do
     {
       :ok, [
-        og_tag("og:image", image_url(fallback_seo_image, site)),
-        card_tag("twitter:image", image_url(fallback_seo_image, site))
+        og_tag("og:image", image_url(fallback_seo_image)),
+        card_tag("twitter:image", image_url(fallback_seo_image))
       ]
     }
   end
-  defp handle_item_seo_image(nil, item_image, _fallback_seo_image, site) do
+  defp handle_item_seo_image(nil, item_image, _fallback_seo_image, _site) do
     {
       :ok, [
-        og_tag("og:image", image_url(item_image, site)),
-        card_tag("twitter:image", image_url(item_image, site))
+        og_tag("og:image", image_url(item_image)),
+        card_tag("twitter:image", image_url(item_image))
       ]
     }
   end
-  defp handle_item_seo_image(item_seo_image, _item_image, _fallback_seo_image, site) do
+  defp handle_item_seo_image(item_seo_image, _item_image, _fallback_seo_image, _site) do
     {
       :ok, [
-        og_tag("og:image", image_url(item_seo_image, site)),
-        card_tag("twitter:image", image_url(item_seo_image, site))
+        og_tag("og:image", image_url(item_seo_image)),
+        card_tag("twitter:image", image_url(item_seo_image))
       ]
     }
   end
@@ -61,7 +61,7 @@ defmodule DatoCMS.Repo.MetaTag.Image do
     Enum.map(image_fields, fn (field) -> String.to_atom(field.attributes.api_key) end)
   end
 
-  defp image_url(image, site) do
-    DatoCMS.Repo.Image.url_for(image, %{}, site)
+  defp image_url(image) do
+    DatoCMS.Repo.Image.url_for(image, %{})
   end
 end

@@ -14,21 +14,18 @@ defmodule DatoCMS.Repo.MetaTags do
   ]
 
   def for_item({type, _id} = specifier, locale) do
-    item = item(specifier)
+    item = item(specifier, locale)
     item_type = item_type(type)
-    site = site()
-    build_tags(item, item_type, site, locale)
+    build_tags(item, item_type, %{}, locale)
   end
   def for_item(item, locale) do
     type = item.item_type
     item_type = item_type(type)
-    site = site()
-    build_tags(item, item_type, site, locale)
+    build_tags(item, item_type, %{}, locale) # TODO: don't inject site into modules
   end
 
-  defp item(specifier), do: DatoCMS.Repo.get!(specifier)
+  defp item(specifier, locale), do: DatoCMS.Repo.get!(specifier, locale)
   defp item_type(type), do: DatoCMS.Repo.item_type!(type)
-  defp site(), do: DatoCMS.Repo.site!()
 
   defp build_tags(item, item_type, site, locale) do
     args = [%{locale: locale, item: item, item_type: item_type, site: site}]
