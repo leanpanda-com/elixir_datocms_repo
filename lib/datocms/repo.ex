@@ -74,6 +74,7 @@ defmodule DatoCMS.Repo do
   defmemo get(specifier) do
     GenServer.call(@server_name, {:get, {specifier}})
   end
+
   defmemo get(specifier, locale) do
     GenServer.call(@server_name, {:get, {specifier, locale}})
   end
@@ -82,6 +83,7 @@ defmodule DatoCMS.Repo do
     {:ok, result} = get(specifier)
     result
   end
+
   def get!(specifier, locale) do
     {:ok, result} = get(specifier, locale)
     result
@@ -92,8 +94,8 @@ defmodule DatoCMS.Repo do
   end
 
   def item_type!(type) do
-    {:ok, result} = item_type(type)
-    result
+    {:ok, item_type} = item_type(type)
+    item_type
   end
 
   def handle_call({:put, state}, _from, _state) do
@@ -208,6 +210,11 @@ defmodule DatoCMS.Repo do
     {:ok, first_locale}
   end
 
+  defp item_type(type, state) do
+    item_types = state[:item_types_by_type]
+    item_types[type]
+  end
+
   def localize(item, item_type, locale) do
     localized_fields = Enum.reduce(item_type.fields, %{slug: "string"}, fn (f, acc) ->
       %{attributes: %{api_key: api_key, localized: localized}} = f
@@ -229,10 +236,5 @@ defmodule DatoCMS.Repo do
   end
   defp localize_field(_k, v, _locale) do
     v
-  end
-
-  defp item_type(type, state) do
-    item_types = state[:item_types_by_type]
-    item_types[type]
   end
 end
